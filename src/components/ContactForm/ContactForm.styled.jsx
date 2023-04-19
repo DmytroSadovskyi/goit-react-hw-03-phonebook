@@ -1,6 +1,7 @@
 import styled from '@emotion/styled';
+import { Form as FormikForm, ErrorMessage as FormikErrorMessage } from 'formik';
 
-export const Form = styled.form`
+export const Form = styled(FormikForm)`
   display: flex;
   flex-direction: column;
 
@@ -26,12 +27,17 @@ export const Wrapper = styled.div`
   position: relative;
 `;
 
-export const FormInput = styled.input`
+export const Input = styled.input`
   height: 25px;
   width: 88%;
   padding-left: 30px;
   border: 1px solid rgba(33, 33, 33, 0.2);
   border-radius: 5px;
+`;
+
+export const ErrorMessage = styled(FormikErrorMessage)`
+  font-size: 14px;
+  color: red;
 `;
 
 export const FormButton = styled.button`
