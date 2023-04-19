@@ -19,10 +19,10 @@ const phoneRegExp =
 
 const ContactSchema = Yup.object().shape({
   name: Yup.string()
-    .required('Required field!')
+    .required('Name is required!')
     .matches(nameRegExp, 'Name is not valid'),
   number: Yup.string()
-    .required('Required field!')
+    .required('Phone number is required!')
     .matches(phoneRegExp, 'Phone number is not valid'),
 });
 export const ContactForm = ({ onSubmit }) => {
@@ -76,8 +76,9 @@ export const ContactForm = ({ onSubmit }) => {
               }}
             />
           </Wrapper>
+          <ErrorMessage name="number" component="div" />
         </FormField>
-        <ErrorMessage name="number" component="div" />
+
         <FormButton type="submit">Add contact</FormButton>
       </Form>
     </Formik>
