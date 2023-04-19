@@ -13,17 +13,18 @@ import {
 } from './ContactForm.styled';
 import { BsFillPersonFill } from 'react-icons/bs';
 import { GiSmartphone } from 'react-icons/gi';
-const nameRegExp = /^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$/;
-const phoneRegExp =
-  /\+?\d{1,4}?[-.\s]?\(?\d{1,3}\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}/;
 
 const ContactSchema = Yup.object().shape({
   name: Yup.string()
-    .required('Name is required!')
-    .matches(nameRegExp, 'Name is not valid'),
+    .min(2, 'Too Short!')
+    .max(50, 'Too Long!')
+    .required('Name is required!'),
   number: Yup.string()
-    .required('Phone number is required!')
-    .matches(phoneRegExp, 'Phone number is not valid'),
+    .nullable()
+    .optional()
+    .min(7, 'Phone number must be more than 7 characters long')
+    .max(20, 'Phone number must be less than 20 characters long')
+    .required('Phone number is required!'),
 });
 export const ContactForm = ({ onSubmit }) => {
   return (
