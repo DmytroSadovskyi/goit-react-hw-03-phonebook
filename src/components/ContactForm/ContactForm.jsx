@@ -1,5 +1,6 @@
 import { Formik, Field } from 'formik';
 import * as Yup from 'yup';
+import 'yup-phone-lite';
 import { nanoid } from 'nanoid';
 import PropTypes from 'prop-types';
 import {
@@ -14,19 +15,14 @@ import {
 import { BsFillPersonFill } from 'react-icons/bs';
 import { GiSmartphone } from 'react-icons/gi';
 
-const ContactSchema = Yup.object().shape({
+const ContactSchema = Yup.object({
   name: Yup.string()
     .min(2, 'Too Short!')
     .max(50, 'Too Long!')
     .required('Name is required!'),
-  number: Yup.string()
-    .nullable()
-    .optional()
-    .min(7, 'Phone number must be more than 7 characters long')
-    .max(20, 'Phone number must be less than 20 characters long')
-    .required('Phone number is required!'),
+  number: Yup.string().phone('UA').required('Phone number is required!'),
 });
-export const ContactForm = ({ onSubmit }) => {
+export const ContactForm = ({ onSave }) => {
   return (
     <Formik
       initialValues={{
@@ -35,7 +31,7 @@ export const ContactForm = ({ onSubmit }) => {
       }}
       validationSchema={ContactSchema}
       onSubmit={(values, actions) => {
-        onSubmit({ ...values, id: nanoid() });
+        onSave({ ...values, id: nanoid() });
         actions.resetForm();
       }}
     >
@@ -45,7 +41,7 @@ export const ContactForm = ({ onSubmit }) => {
           <Wrapper>
             <Field name="name">
               {({ field }) => {
-                return <Input {...field} />;
+                return <Input {...field} placeholder="your name" />;
               }}
             </Field>
 
@@ -65,7 +61,7 @@ export const ContactForm = ({ onSubmit }) => {
           <Wrapper>
             <Field name="number">
               {({ field }) => {
-                return <Input {...field} />;
+                return <Input {...field} placeholder="+38-0xx-xxx-xx-xx" />;
               }}
             </Field>
             <GiSmartphone
@@ -89,5 +85,5 @@ export const ContactForm = ({ onSubmit }) => {
 export default ContactForm;
 
 ContactForm.propTypes = {
-  onSubmit: PropTypes.func.isRequired,
+  onSave: PropTypes.func.isRequired,
 };
